@@ -1,0 +1,5 @@
+hello-world.html: hello-world.md
+	cmark hello-world.md > hello-world.html
+
+clean: # No file prerequisites
+	rm hello-world.html

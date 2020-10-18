@@ -1,0 +1,18 @@
+"A simple makefile consists of “rules” with the following shape:" - GNU Make Manual 2.1
+
+target … : prerequisites …
+        recipe
+        …
+        …
+
+Lets define these terms:
+	Prerequisite: A file used as input to create the "target." 
+	Example: I need a Markdown file to generate HTML
+	Recipe: The action "make" carries out, how to generate the output file.
+	Example: To generate an HTML file with cmark (Common Mark)
+
+Lets put this together
+Makefile
+
+Note: Makefiles require tabs
+Note: First target is what is run with "make", other targets can be run with, for example, "make <target>"

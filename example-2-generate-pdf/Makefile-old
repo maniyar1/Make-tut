@@ -1,0 +1,41 @@
+t=$(tex) -o # Recursive variable, only sort supported by many Makes
+tex=pdflatex
+# Can't do
+# tex= $(tex) -8bit
+
+# But... second variable type: simply expanded variable
+# "Does not contain any references to other variables; it contains their values as of th etime the variable was defined"
+# https://www.gnu.org/software/make/manual/make.html#Using-Variables
+tex ::= $(tex) -8bit # Posix notation, you can also use := in GNU Make
+
+hello-world.pdf: hello-world.tex
+	$(tex) hello-world.tex # or $(tex) hello-world.tex
+
+hello-world.tex: hello-world.md
+	printf "\documentclass[letter]{article} \n\\\begin{document} \n" > hello-world.tex
+	cmark -t latex hello-world.md >> hello-world.tex
+	printf "\\\end{document}" >> hello-world.tex
+
+clean: # No file prerequisites
+	rm -f hello-world.log hello-world.tex hello-world.pdf hello-world.aux
+
+
+
+latex ::= pdflatex
+mark ::= cmark
+
+markpdf ::= $(mark) -t latex
+
+mark ::= cmark -o whatever
+# markpdf = cmark -t latex
+
+hello-world.pdf: hello-world.tex
+	$(latex) hello-world.tex
+
+hello-world.tex: hello-world.md
+	printf "\documentclass[letter]{article} \n\\\begin{document} \n" > $@
+	$(markpdf) $^ >> $@
+	printf "\\\end{document}" >> $@
+
+clean:
+	rm -f hello-world.aux hello-world.log hello-world.tex texput.log 

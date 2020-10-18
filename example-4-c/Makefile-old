@@ -1,0 +1,5 @@
+myprog: main.o
+	cc -o $@ $^
+
+clean:
+	rm -f myprog main.o
